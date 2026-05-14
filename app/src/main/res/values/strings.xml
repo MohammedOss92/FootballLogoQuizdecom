@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Football Logo Quiz</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="siteUrl">http://www.fblogoquiz.comze.com/</string>
+    <string name="shareSubject">FootBall Logo Quiz</string>
+    <string name="shareText">FootBall Logo Quiz on Google Play!\n</string>
+    <string name="adBannerUnitId">ca-app-pub-5801665007208244/1416910816</string>
+    <string name="adInterstitialUnitId">ca-app-pub-5801665007208244/6926890812</string>
+    <string name="interstitial_id">0</string>
+
+</resources>

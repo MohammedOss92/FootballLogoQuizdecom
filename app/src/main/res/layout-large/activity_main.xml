@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_main"
+    tools:context=".MainActivity" >
+
+    <ImageView
+        android:id="@+id/titleImg"
+        android:layout_width="300dp"
+        android:layout_height="180dp"
+        android:scaleType="fitXY"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/title" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/play"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_play_main" />
+
+        <Button
+            android:id="@+id/statistics"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_statistics_main" />
+
+        <Button
+            android:id="@+id/settings"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_settings_main" />
+
+        <Button
+            android:id="@+id/about"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_about_main" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/rate"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/button_rate"
+        android:scaleType="fitXY" />
+
+    <ImageButton
+        android:id="@+id/share"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/rate"
+        android:background="@drawable/button_share"
+        android:scaleType="fitXY" />
+
+    <ImageView
+        android:id="@+id/logosImg"
+        android:layout_width="290dp"
+        android:layout_height="170dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/logos_main" />
+
+</RelativeLayout>

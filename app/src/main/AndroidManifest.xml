@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- تم حذف سطر الـ package من هنا لأنه سيعتمد على الـ namespace في ملف build.gradle -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- ملاحظة: WRITE_EXTERNAL_STORAGE لم تعد تعمل في SDK 34/35 للصور والفيديو، أضف هذا الشرط -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/app_icon"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.FootballLogoQuiz"
+        tools:targetApi="35"> <!-- تحديث الـ targetApi هنا -->
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1895204889916566~2101246542"/>
+
+        <!-- إعلانات جوجل لا تحتاج لتعريف النشاط يدوياً في الإصدارات الحديثة إلا في حالات خاصة، لكن لا بأس بتركه -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:exported="false" /> <!-- أضف exported="false" للأمان -->
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- بقية الأنشطة: يفضل استخدام النقطة "." قبل اسم الكلاس للاختصار -->
+        <activity android:name=".UpdatesDialogActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Dialog" android:exported="false" />
+        <activity android:name=".LevelsActivity" android:screenOrientation="portrait" android:exported="false" />
+        <activity android:name=".LogosActivity" android:screenOrientation="portrait" android:exported="false" />
+        <activity android:name=".GameActivity" android:screenOrientation="portrait" android:exported="false" />
+        <activity android:name=".StatisticsActivity" android:screenOrientation="portrait" android:exported="false" />
+        <activity android:name=".AboutActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Dialog" android:exported="false" />
+        <activity android:name=".SettingsActivity" android:screenOrientation="portrait" android:exported="false" />
+
+        <service android:name=".GetUpdatesService" android:exported="false" />
+        <service android:name=".CheckUpdatesService" android:exported="false" />
+
+    </application>
+
+</manifest>

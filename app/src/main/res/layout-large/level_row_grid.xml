@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="170dp"
+    android:layout_height="170dp"
+    android:background="@drawable/level_grid_selector"
+    android:gravity="center" >
+
+    <RelativeLayout
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/leCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="SPAIN"
+            android:textColor="#FFF"
+            android:textSize="22sp" >
+        </TextView>
+
+        <ImageView
+            android:id="@+id/lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/unlockedArea"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:src="@drawable/lock" />
+
+        <LinearLayout
+            android:id="@+id/unlockedArea"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/leCountry"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/leFlag"
+                android:layout_width="100dp"
+                android:layout_height="70dp" />
+
+            <LinearLayout
+                android:id="@+id/scoreAndLogos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/leScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="Score : 100"
+                    android:textColor="#FFF"
+                    android:textSize="14sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/leLogosNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="20/30"
+                    android:textColor="#FFF"
+                    android:textSize="14sp" >
+                </TextView>
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/logosProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

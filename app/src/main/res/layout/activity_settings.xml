@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/field" >
+
+    <include layout="@layout/title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#95000000"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <Button
+            android:id="@+id/sound"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_setting"
+            android:drawableLeft="@drawable/sound_setting"
+            android:drawablePadding="-40dp"
+            android:gravity="center"
+            android:text="Sound Effects on"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/vibrate"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_setting"
+            android:drawableLeft="@drawable/vibration_setting"
+            android:drawablePadding="-40dp"
+            android:text="Vibration on"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/rate"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_setting"
+            android:drawableLeft="@drawable/rate_setting"
+            android:drawablePadding="-40dp"
+            android:text="Rate"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/share"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_setting"
+            android:drawableLeft="@drawable/share_setting"
+            android:drawablePadding="-40dp"
+            android:text="Share"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/check"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/button_setting"
+            android:drawableLeft="@drawable/check_setting"
+            android:drawablePadding="-40dp"
+            android:text="Check For Updates"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/reset"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/button_setting"
+            android:drawableLeft="@drawable/reset_setting"
+            android:drawablePadding="-40dp"
+            android:text="Reset Game"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/adBannerUnitId" />
+
+</RelativeLayout>
