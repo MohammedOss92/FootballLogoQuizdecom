@@ -42,135 +42,109 @@ public class LogosActivity extends Activity {
 
 	// ==============================================================================
 
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_logos);
 
-		RelativeLayout layout = (RelativeLayout) findViewById(R.id.titleBar);
+		// ===================== UI =====================
+		RelativeLayout layout = findViewById(R.id.titleBar);
 
-		ImageButton back = (ImageButton) layout.findViewById(R.id.back);
-		back.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-				Intent intent = new Intent(LogosActivity.this, LevelsActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-				finish();
-				startActivity(intent);
-
-			}
+		ImageButton back = layout.findViewById(R.id.back);
+		back.setOnClickListener(v -> {
+			Intent intent = new Intent(LogosActivity.this, LevelsActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			startActivity(intent);
+			finish();
 		});
 
-		TextView title = (TextView) layout.findViewById(R.id.title);
+		TextView title = layout.findViewById(R.id.title);
+
+		TextView scoreTitle = layout.findViewById(R.id.scoreTitle);
+		TextView scoreValue = layout.findViewById(R.id.scoreValue);
 
 		Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/DS-DIGII.TTF");
-		TextView scoreTitle = (TextView) layout.findViewById(R.id.scoreTitle);
 		scoreTitle.setTypeface(tf);
-
-		TextView scoreValue = (TextView) layout.findViewById(R.id.scoreValue);
 		scoreValue.setTypeface(tf);
-		
 
-		db = new DAO(this);
-		db.open();
+		logosGrid = findViewById(R.id.logosGrid);
 
-//		c = db.getLevelLogos(getIntent().getIntExtra("LevelId", 0));
-//
-//		if (c.getCount() != 0) {
-//
-//			title.setText(c.getString(c.getColumnIndex("le_country")).toUpperCase());
-//			scoreValue.setText(String.valueOf(c.getInt(c.getColumnIndex("level_score"))));
-//
-//			logosArray = new ArrayList<HashMap<String, String>>();
-//
-//			logosGrid = (GridView) findViewById(R.id.logosGrid);
-// استخدام try-with-resources لضمان الإغلاق التلقائي للكورسور
-		try (Cursor c = db.getLevelLogos(getIntent().getIntExtra("LevelId", 0))) {
+		logosArray = new ArrayList<>();
 
-			// استخدام moveToFirst بدلاً من getCount لضمان جهوزية البيانات للقراءة
+		// ===================== DB =====================
+		DAO db = new DAO(this);
+		Cursor c = null;
+
+		try {
+			db.open();
+
+			int levelId = getIntent().getIntExtra("LevelId", 0);
+
+			c = db.getLevelLogos(levelId);
+
 			if (c != null && c.moveToFirst()) {
 
-				// 1. استخراج الفهارس (Indices) أولاً لتجنب تحذيرات النظام
+				// ===== Header data =====
 				int countryIdx = c.getColumnIndex("le_country");
 				int scoreIdx = c.getColumnIndex("level_score");
 
-				// 2. التحقق من وجود الأعمدة قبل القراءة
 				if (countryIdx != -1 && scoreIdx != -1) {
 
-					// قراءة اسم الدولة مع تحويله لحروف كبيرة وإزالة الفراغات بأمان
 					String countryName = c.getString(countryIdx);
 					title.setText(countryName != null ? countryName.trim().toUpperCase() : "");
 
-					// قراءة النتيجة (Score) وتحديث النص
 					scoreValue.setText(String.valueOf(c.getInt(scoreIdx)));
 				}
 
-				// 3. تجهيز المصفوفة والشبكة (Grid)
-				logosArray = new ArrayList<HashMap<String, String>>();
-				logosGrid = (GridView) findViewById(R.id.logosGrid);
+				// ===== Grid columns =====
+				int idxId = c.getColumnIndex(KEY_ID);
+				int idxName = c.getColumnIndex(KEY_NAME);
+				int idxImage = c.getColumnIndex(KEY_IMAGE);
+				int idxCompleted = c.getColumnIndex(KEY_COMPLETED);
+				int idxImageSd = c.getColumnIndex(KEY_IMAGE_SDCARD);
 
-				// هنا يمكنك البدء بحلقة do-while لاستخراج بقية الشعارات كما فعلنا سابقاً
-			}
-		} catch (Exception e) {
-			Log.e("DB_ERROR", "إثر محاولة جلب شعارات المستوى حدث خطأ غير متوقع", e);
-		}
-		// 1. استخراج فهارس الأعمدة خارج الحلقة (Optimization)
-		int idxId = c.getColumnIndex(KEY_ID);
-		int idxName = c.getColumnIndex(KEY_NAME);
-		int idxImage = c.getColumnIndex(KEY_IMAGE);
-		int idxCompleted = c.getColumnIndex(KEY_COMPLETED);
-		int idxImageSd = c.getColumnIndex(KEY_IMAGE_SDCARD);
+				if (idxId != -1 && idxName != -1 && idxImage != -1) {
 
-// 2. التحقق من وجود الأعمدة (ليس -1) قبل بدء التكرار
-		if (idxId != -1 && idxName != -1 && idxImage != -1) {
-			do {
-				HashMap<String, String> map = new HashMap<>();
+					do {
+						HashMap<String, String> map = new HashMap<>();
 
-				// قراءة البيانات باستخدام الفهارس الجاهزة
-				map.put(KEY_ID, c.getString(idxId));
-				map.put(KEY_NAME, c.getString(idxName));
-				map.put(KEY_IMAGE, c.getString(idxImage));
-				map.put(KEY_COMPLETED, c.getString(idxCompleted));
-				map.put(KEY_IMAGE_SDCARD, c.getString(idxImageSd));
+						map.put(KEY_ID, c.getString(idxId));
+						map.put(KEY_NAME, c.getString(idxName));
+						map.put(KEY_IMAGE, c.getString(idxImage));
+						map.put(KEY_COMPLETED, c.getString(idxCompleted));
+						map.put(KEY_IMAGE_SDCARD, c.getString(idxImageSd));
 
-				logosArray.add(map);
+						logosArray.add(map);
 
-//			} while (c.moveToNext()); // الاستمرار طالما يوجد صف تالٍ
-//		}
-//			do {
-//				map = new HashMap<String, String>();
-//
-//				map.put(KEY_ID, c.getString(c.getColumnIndex(KEY_ID)));
-//				map.put(KEY_NAME, c.getString(c.getColumnIndex(KEY_NAME)));
-//				map.put(KEY_IMAGE, c.getString(c.getColumnIndex(KEY_IMAGE)));
-//				map.put(KEY_COMPLETED, c.getString(c.getColumnIndex(KEY_COMPLETED)));
-//				map.put(KEY_IMAGE_SDCARD, c.getString(c.getColumnIndex(KEY_IMAGE_SDCARD)));
-//
-//				logosArray.add(map);
-			} while (c.moveToNext());
+					} while (c.moveToNext());
+				}
 
-			adapter = new LogosAdapter(this, logosArray);
-			logosGrid.setAdapter(adapter);
+				// ===== Adapter =====
+				adapter = new LogosAdapter(this, logosArray);
+				logosGrid.setAdapter(adapter);
 
-			// Click event for single list row
-			logosGrid.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					map = logosArray.get(position);
+				logosGrid.setOnItemClickListener((parent, view, position, id) -> {
+					HashMap<String, String> map = logosArray.get(position);
 
 					Intent intent = new Intent(LogosActivity.this, GameActivity.class);
 					intent.putExtra("LogoId", map.get(KEY_ID));
 					startActivity(intent);
+				});
+			}
 
-				}
-			});
+		} catch (Exception e) {
+			Log.e("DB_ERROR", "Error loading logos", e);
 
+		} finally {
+			if (c != null && !c.isClosed()) {
+				c.close();
+			}
+			db.close();
 		}
 	}
-
 	// ==============================================================================
 
 	@Override
